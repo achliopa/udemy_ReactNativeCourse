@@ -271,3 +271,41 @@ and the last in bottom left corner
 
 * Linking ReactNative API Library to link to other native apps.
 * Linking library has openURL(url) method to open url witht the browser
+
+# Section 9 - Authentication w/ Firebase
+
+## Lecture 55 - Auth App Introduction
+
+* in our workspace we run: react-native init auth
+* we will implement a simple authentication form. signup login logout
+* again we have Header Card/CardSection Button and new Componet LoginForm
+* we will use firebase and try to integrate into React
+* we kl use a spinner for loading and validation
+
+## Lecture 56 - Common Root Component
+
+* we launch android emulator
+* in /auth we run react-native run-android
+* we create a new folder /src for custom code
+* we delete App.js (root component) and make a new one in /src
+* App.js is a boilerpate class react component
+* in index.js we fix the import and check the emulator
+* we copy paste reusable components from last project  (Header,Card,CardSection, Button)
+* in the common folder we add index.js file to createa common import
+we export everything * from each file in the folder (our exports must be named and not default in the individual files so se remove default). we add Header to App
+
+## Lecture 57 - What is Firebase?
+
+* online database + auth (analytics and file storage) GOOGLE
+* https://console.firebase.google.com/ ADD Project
+* we name it and create it.
+* we select add firebase to your webapp although we develop native. as react uses javascript
+* we select auth at develop and select authentication method. we cannot use oauth as it has issues with react native so we go for setup signin method -> email/password and enable it
+
+## Lecture 58 - Firebase Client Setup
+
+* we need to install firebase in our project with yarn (yarn add firebase)
+* we have a bunch of data waiting for us so we need to tell our app to connect to these data
+* we need to connect before our App renders so we add a lifecycle method there (componentWillMount)
+* in our firebase console top right we click web setup
+* we are not using html so we copy the config object as a param at firebase.initializeApp()
