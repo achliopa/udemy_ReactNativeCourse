@@ -132,3 +132,39 @@ with api 23 and launch it
 * eslint is causing problems. we commit and test later
 
 ## Lecture 15 - Project Walkthrough
+
+* 2 folders. ios and android
+* config files
+* index.js is the root file of our app
+* we want to create a component and render it on screen
+** import a library to help create a component
+** create a component 
+** render it to the device
+
+## Lecture 17 - React vs React native
+
+* React: component behaviour, make components work together
+* ReactNative: take a component and render it on mobile screen, provides core componets 
+* our first component is functional stateless React component
+* in react native we wrap text in <Text /> react component
+* babel takes care of translating jsx to common javascript
+* to render React components in Device we use: ReactnNative.AppRegistry.registerComponent('<appname>', () => RootAppComponent)
+* we needt to destructure import to import Text
+
+## IMPORTANT NOTE
+
+* When we reboot our linuc dev machine and we try to npm start or run-android it crashes. We need to run the watchamn config sctipt again and it is ok. as eslint is not properly configured yet we use our emulator for debugging. (SWEET)
+we rerun the app with typing r with the emulator on
+* in ios development or in old version there where 2 different index.js files. index.ios.js and index.android.js. we will check if we need to create two root app files. NO. We change to index.android.js and it breaks
+
+## Lecture 21 - Application Outline
+
+* we will have a static header and scrollable cards for music albums. each card will have a header an image and a button to buy, directing to the purchase page (amazon). components
+** Header
+** Card ->[CardSection]
+
+## Lecture 22 - Header Component
+
+* we create a src folder for all our project src files. in it a components folder for React Components and there Header.js for Header component
+* we create it as a staless function component.
+* we export it the standard react way.
