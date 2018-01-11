@@ -156,6 +156,8 @@ with api 23 and launch it
 * When we reboot our linuc dev machine and we try to npm start or run-android it crashes. We need to run the watchamn config sctipt again and it is ok. as eslint is not properly configured yet we use our emulator for debugging. (SWEET)
 we rerun the app with typing 2 times r with the emulator on
 * in ios development or in old version there where 2 different index.js files. index.ios.js and index.android.js. we will check if we need to create two root app files. NO. We change to index.android.js and it breaks
+* SOLUTION:1. it appears that watchman at dev pc reboot loses its config. resun watchman config script if needed
+* SOLUTION:2 new react-native uses YARN. dont use npm install for addon packages. USE YARN
 
 ## Lecture 21 - Application Outline
 
@@ -191,3 +193,44 @@ we rerun the app with typing 2 times r with the emulator on
 # Section 7 - HTTP Requests from React Native
 
 ## Sourcing Album Data
+
+* we need to consume api for dynamic data. no hardcoding
+* an api waitin gfor us for this app in: https://rallycoding.herokuapp.com/api/music_albums
+* we ll use AlbumList comp to list all AlbumDetail components for each album
+* app renders Header and AlbumList that will get the api data
+* react requirement for single element return in jsx holds for native. but unlice react-dom here we dont use <div> but <View> element to wrap things up
+* to handle async request to backend api we will transorf AlbumList to statefull class component and give him a state to rerender when list of data becomes available
+* Refresher: 
+** Functional Stateless Component: Used for presenting static data, cant hadle fetch data, easy to write (arrow function)
+** class (stateful) component: used for dynamic sources of data, handles any data that might change, knows when it renders, can have state, has lifecycle methods available, it is an ES6 javascript class.
+
+## Lecture 32 - Lifecycle Methods
+
+* we need to decide when dynamic data will be fetched (before we render) . we use componentWillMount lifecycle method.
+* we add a console.log to test. where is the console.log?????
+* react native offers debugger functionality at 
+http://localhost:8081/debugger-ui/
+* our console log appears at at that page console (dev tools)
+* at emulator we need to bress ctrl+m (dev menu) to enable remote JS debugging (and use the console)
+* we can even use debugger; calls in our code to trigger debugger launch
+* console shows tha will mount is called to times in reload..
+*ALWAYS STOP REMOTE DEBUGGER BEFORE CLOSING EMULATOR
+
+## Lecture 34 - Network Requests with Axios
+
+* axios usually has problems with react native. in that case we use native lib fetch
+npm install --save axios in our project (USE YARN)
+* the flow is: react native boots up -> rn decides to render app on screen -> app decides to render itself , Header and AlbumList -> album realizes its about to render and call componentWillMount -> hook method makes HTTP req(async) -> App, album list and header render -> http returs json data
+* we need to rerender. react component state solves it
+* we could use ES6 class constructor to init state. probably the tutor uses ES7 experimental class attributes under the hood with babel and does it straight as a propery. we will go this way. we use empty string to avoid array.map crashes
+* setstate causes rerender of the affected elemets (containing changing data)
+* Component State Refresher:
+** a plain javascript object used to record and respond to user triggered events
+** when we need to update what a component shows, call this.setState
+* only change state with setState no this.state =
+* we defile AlbumDetail to host Album card.
+
+## Lecture 39 - Fantastic Reusable Componenbts - The Card
+
+* we will implement reusable react components complete with styling for presentational purposes. our aim is to make them reusable
+* to render a React Component passed into nother React Component by wrapping it with tags we use the {props.children}
