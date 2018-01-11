@@ -234,3 +234,40 @@ npm install --save axios in our project (USE YARN)
 
 * we will implement reusable react components complete with styling for presentational purposes. our aim is to make them reusable
 * to render a React Component passed into nother React Component by wrapping it with tags we use the {props.children}
+
+# Section 8 - Mastering Component layout
+
+## Lecture 43 - Master Layout w/ Flexbox
+
+* flexbox can layout multiple items in a container.
+* flexbox if we dont direct it outherwise will place all items on top left corner one under the other 
+* justify content ' and alignitem works the same for multiple like for one item.
+* justify content 'space-between' equalizes space between the items with the first in topleft
+and the last in bottom left corner
+* justify content: 'space-around' does the same but added equalized space before and after the item group 
+
+## Lecture 44 - Positioning of elements in Mobile
+
+* we will wrap the 2 text elemets in a vew item. image also in a view item. both will be style with justify-content: flex start. to put them left. but justifyCOntent we saw that it posistions on the vertical axis. now we want to use it for the horizontal axis. this is achieved with flex direction. (flexDirection: 'row')
+* what is left is to align text items vertical within a view. we introduce a Text Container (View) which syles its internal items with flexDirection: 'column' and justifyContent: 'space-around'
+* we render images in react native with <Image /> tag. we need to add source property with a uri to the image file ant to add a a style property passing an object that defines a height and width in pixels
+* A trick to style an image to fill a parent container on React native with Flexbox is: height: a large value, flex: 1, width: null
+* we cannot scroll
+
+## Lecture 48 - Making Content Scrollable
+
+* we detect the jsx tags that are supposed to be scrollable (for us AlbumList  />, we import a React native Component <ScrollView /> and we wrap our componet with that
+* in older reactnative release scroll bounced back to start. to fix this we add style={{ flex: 1}} as a parameter to the SCrollView parent component
+
+## Lecture 49 - Handling User Input with Buttons
+
+* we will make our reusable button
+* in ReactNative Docs TouchableOpacity is a button, TouchableHighlight is also a button. Opacity and Hoghlight are visual effects on button wjen the user taps. we treat them as View tags
+* TouchableOpacity componet supports onPress event handlers
+* styling with flexbox. flex: 1 means take as much space as you can. alignSelf: 'strech' means stretch to fill as much space as you can
+* we pass an anonymous callbacka s a prop to the Button to run at the onPress event
+
+## Lecture 52 - Linking Between Mobile Apps
+
+* Linking ReactNative API Library to link to other native apps.
+* Linking library has openURL(url) method to open url witht the browser
