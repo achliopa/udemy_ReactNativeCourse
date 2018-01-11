@@ -154,7 +154,7 @@ with api 23 and launch it
 ## IMPORTANT NOTE
 
 * When we reboot our linuc dev machine and we try to npm start or run-android it crashes. We need to run the watchamn config sctipt again and it is ok. as eslint is not properly configured yet we use our emulator for debugging. (SWEET)
-we rerun the app with typing r with the emulator on
+we rerun the app with typing 2 times r with the emulator on
 * in ios development or in old version there where 2 different index.js files. index.ios.js and index.android.js. we will check if we need to create two root app files. NO. We change to index.android.js and it breaks
 
 ## Lecture 21 - Application Outline
@@ -168,3 +168,26 @@ we rerun the app with typing r with the emulator on
 * we create a src folder for all our project src files. in it a components folder for React Components and there Header.js for Header component
 * we create it as a staless function component.
 * we export it the standard react way.
+
+# Section 6 - Make the App Looking Great
+
+* ## Lecture 24 - Styling w/ React native
+
+* unfortunately no css/html ready made like Bootstrap Of Materialize
+* we do it the React way. we usss css styling but the systax is javascript obejt and the property names camelcase according to react spec. we create a styles object outside with nested obects that contain javascript style css. we destructure the master style object in our component using a nested object per reactnative element where we pass it as a prop by the name style
+* to position our text on the phone we use another ReactNative primitive type called View that wraps Text. we style it like Text by destructuring and styles object and pass it to props. we change its backround color
+
+## Lecture 26 - Intro to Flexbox
+
+* a way of positioning an element in a box
+* we use property justifyContent: 'flex-end' it positions content element in bottom left position, 'center' to left center 'start' to left top.
+*we use alignItems: 'flex-start' to top left, 'center' for top center 'flex-end' for top right
+* we combine both and we add shadow border in bottom with css
+
+## Lecture 27 - Making Header Reusable
+
+* wee use react component props to pass title
+
+# Section 7 - HTTP Requests from React Native
+
+## Sourcing Album Data
