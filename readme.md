@@ -346,3 +346,25 @@ is the function we call to signup (firebase.auth().createUserWithEmailAndPasswor
 
 * firebase.auth() has an event handler onAuthStateChanged()
 * we want to put it at app initialization so we put it in App.js after connection to firebase. this function we check the auth state and set component state. based on componnet state w eshow login form ior logout button which calls firebase.auth().signOut()
+
+# Section 11 - Diggin Deeper in Redux
+
+## Lecture 78 - App Mockup and Redux Approach
+
+* We want animations. show, use Redux lists very fast
+* Redux refresher:
+** Action --> [Store: --> Reducer --> State]
+** Turn 'asd' into an aray of characters -->[--> if action type is 'split'. take a string of characters and turn it to array --> ['a','b,'c,'d']]
+** Action: An object that tells the reducer how to change its data, must contain type
+** Store: An object that holds the applications data
+** Reducer: A function that returns some datas
+** State: Data for our app to use
+** WE ALWAYS RETURN BRAND NEW OBJECTS FROM REDUCERS
+
+## Lecture 82 - App Boilerplate
+
+* we install redux and react-redux with yarn (yarn add redux react-redux)
+* we copy common folder from previous project after making src and components folders
+in root app file re import redux and react-redux libs and use Provider and createStore like a web app.
+* Provider  contains the store and translates the data to react usable data
+* we create a dummy reducer use combinereducers to make one that is passed in createStore.
