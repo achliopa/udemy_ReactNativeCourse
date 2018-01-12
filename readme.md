@@ -294,7 +294,7 @@ and the last in bottom left corner
 * in the common folder we add index.js file to createa common import
 we export everything * from each file in the folder (our exports must be named and not default in the individual files so se remove default). we add Header to App
 
-## Lecture 57 - What is Firebase?
+## Lecture 58 - What is Firebase?
 
 * online database + auth (analytics and file storage) GOOGLE
 * https://console.firebase.google.com/ ADD Project
@@ -302,10 +302,27 @@ we export everything * from each file in the folder (our exports must be named a
 * we select add firebase to your webapp although we develop native. as react uses javascript
 * we select auth at develop and select authentication method. we cannot use oauth as it has issues with react native so we go for setup signin method -> email/password and enable it
 
-## Lecture 58 - Firebase Client Setup
+## Lecture 59 - Firebase Client Setup
 
 * we need to install firebase in our project with yarn (yarn add firebase)
 * we have a bunch of data waiting for us so we need to tell our app to connect to these data
 * we need to connect before our App renders so we add a lifecycle method there (componentWillMount)
 * in our firebase console top right we click web setup
 * we are not using html so we copy the config object as a param at firebase.initializeApp()
+
+## Lecture 60 - Login Form Scaffolding
+
+* We will make another Component for form as it appears and disapears
+* Loginform is a class components as we expect it to have state to handle text input.
+* Text input will be build in the component and then refactored to a reusable component
+* Reactnative offers a primitive TextInput to handle text input.
+* TextInput by default does not have a set height and width like Image tag. we need to style them
+* TextInput supports onChangeText event handlers. we use the handler to set the component state with the text inserted. we inject directly an anonymous arrow function
+* we set the value with state.text to reset after submit
+flow is: textInput -> user types text -> onChangeText event is called -> setState with new text ->comp rerenders (when we rerender textInput value is this.state.text). This flow is a reatime capture of any text input change in state. this
+is done becdause textinput does not internaly keep state to know its value
+* we remove style property as it creates issues.
+* we create are usable component called Input and place it in common. this component is functional and used for presentation of an Input section (label+ input).
+* we import this componet in LoginForm and place it in jsx.
+*as this is presentational we dont want to insert in it any logic or state. but we have defined all these in LoginForm refering to the TextInput that now is in Input. we pass them 2 levels down the iheritance LoginForm-> Input-> TextInput using the props system. especialy Input just parses these props.
+* we do extensive styling in Input using a styling object. we use flexbot. we use the flex: param giving different values. these are the flex representation of grid. these values are add up and each item gets its defined fraction of the sum e.g a) flex: 2 b) flex: 1 a gets 2/3 of grid and b 1/3 in the direction that flex was applied.
