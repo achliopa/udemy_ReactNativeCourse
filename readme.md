@@ -326,3 +326,23 @@ is done becdause textinput does not internaly keep state to know its value
 * we import this componet in LoginForm and place it in jsx.
 *as this is presentational we dont want to insert in it any logic or state. but we have defined all these in LoginForm refering to the TextInput that now is in Input. we pass them 2 levels down the iheritance LoginForm-> Input-> TextInput using the props system. especialy Input just parses these props.
 * we do extensive styling in Input using a styling object. we use flexbot. we use the flex: param giving different values. these are the flex representation of grid. these values are add up and each item gets its defined fraction of the sum e.g a) flex: 2 b) flex: 1 a gets 2/3 of grid and b 1/3 in the direction that flex was applied.
+*secureTextEntry property hides password in textinput. autoCorrect property enables disabes mobile autocorrect functionality in textinput
+* for boolean props defining them without assignment sets them true not defineing them at all sets them false on check. no need to someProp={true}
+
+# Section 10 - Processing Authentication Credentials
+
+## Lecture 69 - Logging User In
+
+* we use onPress event handler on Button
+* because our function to be called is a callback to be called in the future we bind it to this.
+* firebase.auth().signInWithEmailAndPassword(email,password);
+is the function we call to signup (firebase.auth().createUserWithEmailAndPassword(email,password)). this call returns a promise
+* if the user signins and fails we take him to signup if it fails we sahow error. in success we take him to successpage
+* we use the promise chain to implement the flow
+* we test the flow and it works
+* we will add a spinner while we wait for reply. we add a Spinner in common to reuse it. we use native element ActivityIndicator from react-native and we wrap it with a View tag to style it
+
+## Lecture 75 - Handling Authentication Events
+
+* firebase.auth() has an event handler onAuthStateChanged()
+* we want to put it at app initialization so we put it in App.js after connection to firebase. this function we check the auth state and set component state. based on componnet state w eshow login form ior logout button which calls firebase.auth().signOut()
