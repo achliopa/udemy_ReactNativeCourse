@@ -453,3 +453,22 @@ UIManager.setLayoutAnimationEnabledExperimental
     && UIManager.setLayoutAnimationEnabledExperimental(true);
 
 * we need to call animation before update
+
+# Section 14 - Not Done Yet
+
+## Lecture 104 - Next App Overview
+
+* we will explore navigation in a new app called mananger
+* we will login to a dashboard showing employes. there will be a form to create or edit employee and msg hom and and a button to delete him
+* we will use redux fro login. 
+* header changes depending on the app state
+* each use has private pool of employees
+* show several screens . navigation
+* full screen overlay to delete actiopn
+* text msg from app
+
+## Lecture 107 - App Setup
+
+* we install reduc and react-redux with yarn
+* add boilerplate Root react component with redux.
+* we install firebase lib with yarn
