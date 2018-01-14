@@ -368,3 +368,23 @@ is the function we call to signup (firebase.auth().createUserWithEmailAndPasswor
 in root app file re import redux and react-redux libs and use Provider and createStore like a web app.
 * Provider  contains the store and translates the data to react usable data
 * we create a dummy reducer use combinereducers to make one that is passed in createStore.
+
+# Section 12 - Back to React
+
+## Lecture 84 - Rendering header
+
+* Provider can have only one child
+* we will set alist of catds with one cardsection visible. when user taps on it the other cardsections will become visible. we will ddo this with redux
+*)
+* Data in Redux come from Reducers and are in the State
+* REFRESHER: How we decide on reducers
+** what are the states of the app. ahat are the data in the app.
+** We use Library Reducer (list of tech library objects) and Selection Reducer
+
+## Lecture 86 = Library List of Data
+
+* we put library reducer in a separate file and we import it in combineReducrs under alias libraries which is our redux state proppety in the store
+* json imports is ES6 is simple : import data from './LibraryList.json' returns javascript with auto parsing.
+* library Reducer has no states. it is static and returns the list of objects
+* we create a ReactComponet to show the List of Libraries. It is a class component.
+* we will bind it to Redux using react-redux connect
