@@ -381,10 +381,75 @@ in root app file re import redux and react-redux libs and use Provider and creat
 ** what are the states of the app. ahat are the data in the app.
 ** We use Library Reducer (list of tech library objects) and Selection Reducer
 
-## Lecture 86 = Library List of Data
+## Lecture 86 - Library List of Data
 
 * we put library reducer in a separate file and we import it in combineReducrs under alias libraries which is our redux state proppety in the store
 * json imports is ES6 is simple : import data from './LibraryList.json' returns javascript with auto parsing.
 * library Reducer has no states. it is static and returns the list of objects
 * we create a ReactComponet to show the List of Libraries. It is a class component.
-* we will bind it to Redux using react-redux connect
+* we will bind it to Redux using react-redux connect forms the connection between the store and react. it wraps the component and talks to store through the provider.
+* REFRESHER: mapStateToProps = state => {} takes state from reduxstore and maps it to react component props.
+* we console log the state in map function
+
+# Section 13 - Rendering Lists 
+
+## Lecture 91 - Theory of ListView
+
+* Rendering a very large list of items with array.map is laggy and slow. it is not efficient to create 1000 react components just to view 10 every time in our screen.
+* React Native provides native ListView. it figures which items are visible and creates components and renders only these. List view uses 10 components whatever fit in screen and populates every time with new data. so it is incredible fast.
+
+## Lecture 92 - ListView in practice.
+
+* ListView is initialized at parent components lifecycle method componentWillMount. there we instantiate ListVew.DataSOurce passiing standard parameters witht he config object
+
+		const ds = new ListView.DataSource({
+			rowHasChanged: (r1, r2) => r1 !== r2
+		});
+
+* we create the dataSource to be used in our React code passign a list of data to the ListView as datasource/
+
+this.dataSource = ds.cloneWithRows(this.props.libraries);
+
+* listvew is called in our jsx passing a prop datasource and a renderRow prop function which renders the rows. this function gets as argument an element of the list to render.
+
+			<ListView
+				dataSource={this.dataSource}
+				renderRow={this.renderRow}
+			/>
+
+				renderRow(library) {
+		return <ListItem library={library} />
+	}
+
+* we implement our custom React Component to show a list item
+* to enable scrolling our top component needs style={{ flex: 1 }}> as a prop 
+
+## Lecture 95 - Selection Reducer
+
+* reducers initializers cannot return undefined. null is accepted
+* we need to connect state with ListItem to know if it is selceted . we know how to do it. also we need to be able to change the state variable based on user taping. this is an redux action. we will use action creator(generator)
+* we bind the actions to the ListItem using connect wrapper passing as second argument the actions import containng our action creator.
+
+## Lecture 98 - Touchable React Native Component
+
+* TouchableWithoutFeedback will register touch events
+* we add onPress event handler that calls the action creator.
+* we wire state and action to the reducer and log the state to check that tapping changes selection
+* reducer initializes its state param to null and switches on action.type
+
+## Lecture 100 - Expanding a Row.
+
+* we will use connect (mapStateToProps) to map state selectionID to ListItems PRop to conditionaly render a second CardSection with the details.
+in mapstatetoprops function we can pass as a second parameter the ownProps to get the component props for condeitional logic like checking ListItem ID if it same as tapped id to expand component.
+
+## Lecture 102 - Animations.
+
+* we use LayoutAnimation React Native Component 
+* we add a lifecycle method componentWillUpdate adding the function LayoutAnimation.spring()
+* in Android it doesnt work. it needs NativeModules to be imported and the following snipped to be added after imports
+
+const { UIManager } = NativeModules
+UIManager.setLayoutAnimationEnabledExperimental
+    && UIManager.setLayoutAnimationEnabledExperimental(true);
+
+* we need to call animation before update
