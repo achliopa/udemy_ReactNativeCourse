@@ -472,3 +472,14 @@ UIManager.setLayoutAnimationEnabledExperimental
 * we install reduc and react-redux with yarn
 * add boilerplate Root react component with redux.
 * we install firebase lib with yarn
+
+# Section 15 - Handling Data in Reaqct vs Redux
+
+## Lecture 108 - LoginForm in Redux
+
+* the benefit is that we make our redux components simpler, moving logic to redux
+* Login form with redux. it shows a form, and calls action creator when a user types or clicks a button.
+* react captures user input. redux process login. React shows result.
+* Login flow: User types sthing -> Calls action creator with new text -> action creator returns an action -> action sent to all reducers -> reducer calculates new app state -> state sent to all components -> components rerender
+
+* we create an event handler for text change in email and call an action generator to serve the event through redux. otherwise it is standard redux code
