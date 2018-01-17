@@ -483,3 +483,35 @@ UIManager.setLayoutAnimationEnabledExperimental
 * Login flow: User types sthing -> Calls action creator with new text -> action creator returns an action -> action sent to all reducers -> reducer calculates new app state -> state sent to all components -> components rerender
 
 * we create an event handler for text change in email and call an action generator to serve the event through redux. otherwise it is standard redux code
+
+# Section 16 - Redux State Mutations 
+
+## Lecture 114 - Immutable state
+
+* we want to store the text captured in react in redux store.
+* this is done in reducer. AuthReducer takes the piece of state it is responsible for e.g. state.auth and the action that has been invoked and produces a new state.
+* after state update if its different (different object) he notifies other components (React) to update
+* we use the following syntax to create a new object when returning state in reducer so that redux will understand that we updated state 
+
+return { ...state, email: action.payload };
+
+* we wire back our state (state.auth.email) to the LoginForm Component using connect helper and the mapStateToProps function
+
+## Lecture 117 - Synchronous vs Async Action Creators
+
+* we want to store more info in the reduc state to enable frontend reactor component to correctly feature thre app state
+* State.auth attributes :
+** email/password: when user types in the input
+** loading: true when auth request sent to firebase, false when complete
+** error: empty string, when catching an error populate with error message
+** null at start. put user model when auth sequence complete.
+* we want to throw ajax (axios request) from action creator.
+* we write an action call that makes a login call to firebase. this is async and we return before it is completed. we need the result of the async call to properly change the state.
+* redux-thunk solves it. we yarn add it to project
+* redux specs for Action Creators are.
+** They are functions
+** must return an action object with a type property
+* Redux-Thunk enhances the specs allowing the action creator to return a function. this function will be called with dispatch
+* we import redux-thunk in top compoennt(App.js)
+it is a Redux middleware. to use it we need to import applyMiddelware from redux and pass applyMiddleware(ReduxThunk) as a 3rd parameter to createStore
+* the flow becomes: action creator called => action creator returns a function => redux thunk sees that we return a function and calls it with dispatch => we do our login request to firebase => wait.. => wait.. => request complete user logged in => .then runs => dipach our action
