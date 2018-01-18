@@ -515,3 +515,5 @@ return { ...state, email: action.payload };
 * we import redux-thunk in top compoennt(App.js)
 it is a Redux middleware. to use it we need to import applyMiddelware from redux and pass applyMiddleware(ReduxThunk) as a 3rd parameter to createStore
 * the flow becomes: action creator called => action creator returns a function => redux thunk sees that we return a function and calls it with dispatch => we do our login request to firebase => wait.. => wait.. => request complete user logged in => .then runs => dipach our action
+* we implement two new actions login success and fail.
+* firebase doesnt celear u error message after successful login, we do it in redux reducer zeroing out error message
