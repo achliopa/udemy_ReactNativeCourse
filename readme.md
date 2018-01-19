@@ -517,3 +517,72 @@ it is a Redux middleware. to use it we need to import applyMiddelware from redux
 * the flow becomes: action creator called => action creator returns a function => redux thunk sees that we return a function and calls it with dispatch => we do our login request to firebase => wait.. => wait.. => request complete user logged in => .then runs => dipach our action
 * we implement two new actions login success and fail.
 * firebase doesnt celear u error message after successful login, we do it in redux reducer zeroing out error message
+
+# Section 17 - Navigation in React Native
+
+## Lecture 126 - Navigation
+
+* react native does not have standard solution for navigation like react-router for web. 
+* a common used library is react native flux. we install it with:
+yarn add react-native-router-flux
+* we need auth flow and main flow in our app
+* flux library has the concept of scene or screen view which refers to some react component. it matches it with a key (uri path like????)
+* syntax:
+
+<Scene
+	key="login"         // call actions.login() to show this scene
+	component={LoginForm} // show component LoginForm
+	title="Login" // make a nav bar and give it a title "Login"
+	initial // this is the first scene to show
+/>
+
+* flux provides its nav bar by default. 
+* we implement a top source file called Router.js. There we import ROuter and Scen from flux. We set ROuter as our top jsx Component and it wraps Scene. A top Component <Scene/> must wrap all our Scene components. THis top sceen must have a key="root"
+the child Scene is for our LoginForm. 
+* we import <Router /> in App.js replacing <LoginForm /> in <Provider />
+* we build and see the navbar
+
+## Lecture 129 - Navigate Between Routes
+
+* Implementing navigation beteen routes is very easy. we import { Action } from 'react-native-router-flux'. we call Action.login() in the place of our code we want to redirect . login binds to the key variable of the Scene component we want to navigate to.
+
+## Lecture 130 - Grouping Scenes in Buckets
+
+* we want to disable back button from employeelist and use it only when loging out
+* we do this by grouping scenes when we want to freely navigate together in a parent scene.
+* we see that we now have two headers stacked in the App because of nesting Scenes in our App.
+* this is solved by adding hideNavBar property in the root Scene. this hides the additional navBar
+* to prevent going back to login screen we direct the navigate action not to the child Scene EmployeeList but to the parent Scene (bucket) with action key "main"
+
+## Lecture 131 - Navigation Bar Buttons
+
+* to add a button on the right of my navbar i add the follwoing two attributes in the  Scene: rightTitle="NameofButton" onRight={()=>{Callback on press}} 
+* The callback can direct to a scen with the action function
+
+## Lecture 133 - EmployeeCreation Form
+
+* we implement form with redux using a sigle action creator for all inputs. this is doe using key interpolation from ES6 .
+* action creator
+
+export const employeeUpdate  = ({ prop, value }) => {
+	return {
+		type: EMPLOYEE_UPDATE,
+		payload: { prop, value }
+	};
+
+* reducer
+
+		case EMPLOYEE_UPDATE:
+			return { ...state, [action.payload.prop]: action.payload.value }
+* we pass the key in brackets making it flexible. 
+* otherwise we implement the typical Redux flow adding a new attribute to state and a new reducer and action group. we use separate files for them
+
+## Lecture 137 - The Picker Component
+
+* Primitive ReactNative Comp
+* picker wrap picker items with options
+* selectedValue tag maps the selected value to a param., onValueChange event handler is triggered when a value is selected
+* picker has 0 dimensions . we use style to add flex: 1 (flexbox) to make it viewable
+* Picker does not support label, we add a Text to the CardSection
+* to overwrite style properies of a component when we instantiate it in jsx we can add styles prop and inside we can add them to the custom styles we have with  	<View style={[styles.containerStyle, props.style]}>
+* we use flex grid to put label and picker side by side
