@@ -586,3 +586,88 @@ export const employeeUpdate  = ({ prop, value }) => {
 * Picker does not support label, we add a Text to the CardSection
 * to overwrite style properies of a component when we instantiate it in jsx we can add styles prop and inside we can add them to the custom styles we have with  	<View style={[styles.containerStyle, props.style]}>
 * we use flex grid to put label and picker side by side
+
+# Section 18 - Storing Data to Firebase
+
+* we use json to define our db schem in firebase
+
+{
+	"users": {
+		"user 456": { employees: {}},
+		"user 123": {
+			"employees": {
+				"employee 1": {
+					"name": "Jane",
+					"phone": "555-555-5555",
+					"shift": "Monday"
+				},
+				"employee 2": {
+					"name": "jim",
+					"phone": "333-333-3333",
+					"shift": "Tuesday"
+				}
+			}
+		}
+	}
+}
+
+* we create our empty db in firebase
+* we delete all default rules and we add our own:
+
+{
+  "rules": {
+		"users": {
+      "$uid": {
+      ".read": "$uid === auth.uid",
+      ".write": "$uid === auth.uid"
+      }
+    }
+  }
+}
+
+* these rules mean that we can read/write in users collection if the id of the user we try to read/write has the same id with the user that authenticated in the app
+* we will create an event handler in create button to persist data to the firebase
+* we boilerplate the action creator for employeeCreate
+* Picker has no default val setting
+
+## Lecture 143 - Successful data storage to firebase
+
+* we set the path of the data we will save with ref in url style
+
+firebase.database().ref(`/users/${currentUser.uid}/employees`)
+
+* we get the authenticated user with;
+
+	const { currentUser } = firebase.auth();
+* we save values with chaining .push({ name, phone, shift }); to ref(). this is an async action 
+* we need to make redux stop complaining. we still need to reset the form and redirect after successful creation of emnployee record
+* we return an arrow function with the async call to firebase and we are ok. in the resolve (.then) we do redirection with flux.
+* we want to remove the back button from navbar to toggle between views. we add { type: 'reset'} as a param in Actions. scene navigation call  to the sibling scene
+* we initialy wanted to avoid dispatch but we see that form data are not cleared out. so we will use redux-thunk to use dispatch to set a state to init values
+* we flesh out the employeelist with cards for each employee
+* we first need to fetch the employees from firebase
+* we use the same ref like create but we chain
+
+.on('value', snapshot => {
+			dispatch({ type: EMPLOYEES_FETCH_SUCCESS, payload: snapshot.val() })
+		});
+*snapshot.val() contains our data fetched
+* .on() event handler AND THIS IS THE BEAUTY OF REDUX + Firebase will listen to any change in the ref() path in the app lifecycle and will dispatch the action for us to update  bound components
+* however we need to call the action creator one off after login to regigter the event handler to firebase, we will use EmployeeList lifecycle method to call it and connect react-redux helper
+* we create anew reducxer to keep track the list of employees in the app state
+
+## Lecture 147 - Dynamic DataSource Binding
+
+* to show the list of employees we will use LIstView from react native primitives
+* we have problem with setting ListView. datasource object with state. employees array of objects. this is because fetch is async so we dont know if we will have the data to bind
+* we use the willReceiveProps lifecycle method to solve this. but is we move data source binding there whene we update  the employee list offline and we remount the component we will lose the changes. so we create a separate function and import it in both lifecycle methods
+* we need to convert object collection of employees to a array of objects to satisfy ListView dataSource contraint.
+* we will use lodash helper methods. we install lodash with yarn and import it as _
+* the transformation is done witht he following snippet in mapStateToProps
+
+	const employees = _.map(state.employees, (val, uid) => {
+		return { ...val, uid}; 
+	});
+
+* what we do is we use map to convert aset of keyd objects to an array of objects and we use the value and key(uid) to interpolate the object in the array passing uid as last attribute.
+* we use Listview to sent a renderrer for each item. we render our custom ListItem passing the array item. we style it and test
