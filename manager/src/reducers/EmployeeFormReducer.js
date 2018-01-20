@@ -12,7 +12,7 @@ const INITIAL_STATE = {
 };
 
 export default (state = INITIAL_STATE, action) => {
-	console.log(action);
+	// console.log(action);
 	switch(action.type) {
 		case EMPLOYEE_CREATE:
 		case EMPLOYEE_SAVE_SUCCESS:
