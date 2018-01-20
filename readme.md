@@ -671,3 +671,53 @@ firebase.database().ref(`/users/${currentUser.uid}/employees`)
 
 * what we do is we use map to convert aset of keyd objects to an array of objects and we use the value and key(uid) to interpolate the object in the array passing uid as last attribute.
 * we use Listview to sent a renderrer for each item. we render our custom ListItem passing the array item. we style it and test
+
+# Section 19 - Code Reuse - Edit vs Create
+
+## Lecture 150 - Reusing the Employee Form 
+
+* we want to tap on an employee name and navigate to its screen. we use touchable without feedback. in onPress handler we call Action..employeeCreate but it is an empty form.
+* we need somehow to pass the employee objet from teh listitem to the scene called with Actions and consequently to the linked react component to be rendered. we will pass it as a props to the navigation
+* this object we pass is passed to the component as a props
+* there is a debate on reusing the create form for edit or not. there are tradeoffs. code reuse vs complexity and polluting the architecture. reuse by tampering the reducer state should be avoided.
+
+* set of inpute fields is reusable (EmployeeForm). we will create 2 forms EmployeeCreate & EmployeeEdit reusing the input fields
+
+## Lecture 152 - Reusable Forms
+
+* we gut out the EmployeeCreate Component taking the 3 sections to a new EmployeeForm Component's render function. we take the actioncreator call and mapstatetoprops and add imports. then we import the form to the EmployeeeCtreate jsx passing all the parent component props to the reusable component.
+
+## Lecture 154 - Initialize Forms from State
+
+* we bind the EmployeeEdit with employyeUpdate action creator to ove data to redux state for rendering.
+* we use the action at a lifecycle method componentWillMount to populate the EmployeeForm fields with dta coming rom ListView (employee data) as props. we use lodash each method to itetrate in the prop object and extract key value pairs to add to the dynamic employeeUpdate (to reuse the method)
+* when user presses the save button we extract the data from the props(EmployeeForm). ready to persist them to firebase
+* we create a new Redux action creator (redux-thunk style) to update data
+* similar to employeeCreate action creator we ref the record we want to alter
+firebase.database().ref(`/users/${currentUser.uid}/employees/${uid}`)
+and we chain .set({updatted params})
+* we bind the action in the EmployeeEdit comp
+* we add flux redirection to list after save. 
+* when we go back to the list after save and click add we see the form prepopulated. this is a redux state issue. we dispatch a new action from our action creator using thunk to clear employee form state to initial values.
+
+## Lecture 157 - Texting Employees
+
+* we will kick user to native message app to send the text
+* we use react-native-communications library which we install with yarn
+* it supports phone, text, email
+* we use text(phonenumber, body)
+* this lib testing does not work on iOS emulator. it works on actual device. in android no prob.
+
+## Lecure 158 - Modals as Reusable Coponents
+
+* we use Modal ReactNative primitive Component
+* we make a reusable component in common and we impot other reusable components that we import separately as named imports to avoid cyclic dependencies
+* Modal has a set of default props. onRequestClose is needed for Android
+* we style it and add callbacks, text and visibility toggle flag as props
+* we import it in EmployeeEdit
+
+##Lecture 161 - Delete Employee Action Creator
+
+* same drill. action crerator that returns an arrow function (callback) that goes to firebase to delete employee and redirects on completion. we use dispatch to reset form data like other actions
+
+GODSPEED YOU, REACT-NATIVE DEVELOPER !!!!!!!

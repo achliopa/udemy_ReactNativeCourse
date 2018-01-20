@@ -21,9 +21,11 @@ class LoginForm extends Component {
 	renderError() {
 		if (this.props.error) {
 			return (
-				<Text style={styles.errorTextStyle}>
-					{this.props.error}
-				</Text>
+				<CardSection>
+					<Text style={styles.errorTextStyle}>
+						{this.props.error}
+					</Text>
+				</CardSection>
 			);
 		}
 	}
@@ -61,8 +63,8 @@ class LoginForm extends Component {
 					value={this.props.password}
 				/>
 			</CardSection>
-			<CardSection>
 				{this.renderError()}
+			<CardSection>
 				{this.renderButton()}
 			</CardSection>
 			</Card>
